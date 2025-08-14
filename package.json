@@ -1,0 +1,35 @@
+{
+  "name": "sat-lm",
+  "version": "1.0.0",
+  "description": "SAT-LM (Satellite Tracking + Local LLM Assistant) - A complete web application for tracking live satellites and asking questions using a local LLM",
+  "scripts": {
+    "install-backend": "cd backend && npm install",
+    "install-frontend": "cd frontend && npm install",
+    "install-all": "npm run install-backend && npm run install-frontend",
+    "dev": "concurrently \"npm run server --prefix backend\" \"npm run dev --prefix frontend\"",
+    "backend": "npm run server --prefix backend",
+    "frontend": "npm run dev --prefix frontend",
+    "build": "npm run build --prefix frontend",
+    "start": "npm run dev"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "satellite",
+    "tracking",
+    "llm",
+    "ollama",
+    "react",
+    "nodejs",
+    "express",
+    "leaflet",
+    "space"
+  ],
+  "author": "SAT-LM Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/sat-lm.git"
+  }
+}
