@@ -82,6 +82,9 @@ const SatelliteMap = ({ satellites, selectedSatellite, onSatelliteSelect }) => {
                   <p><strong>Latitude:</strong> {satellite.lat.toFixed(4)}°</p>
                   <p><strong>Longitude:</strong> {satellite.lon.toFixed(4)}°</p>
                   <p><strong>Altitude:</strong> {satellite.alt.toFixed(2)} km</p>
+                  <p><strong>NORAD:</strong> {satellite.noradId || 'Unknown'}</p>
+                  <p><strong>Launch:</strong> {satellite.launchDesignator || 'Unavailable'}</p>
+                  <p><strong>Launched By:</strong> {satellite.launchedBy || 'Unknown'}</p>
                 </div>
               </div>
             </Popup>

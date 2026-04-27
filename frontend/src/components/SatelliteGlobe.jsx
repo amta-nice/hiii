@@ -140,6 +140,17 @@ const SatelliteGlobe = ({ satellites, selectedSatellite, onSatelliteSelect }) =>
         pointRadius="size"
         pointLabel={(d) => `
           <div style="background: rgba(0,0,0,0.9); padding: 10px; border-radius: 8px; color: white;">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+              <img
+                src="${d.imageUrl || ''}"
+                alt="${d.name}"
+                style="width:36px; height:36px; object-fit:cover; border-radius:6px; border:1px solid rgba(255,255,255,0.25);"
+              />
+              <div style="font-size:11px; color:#9ca3af; line-height:1.3;">
+                <div>NORAD: ${d.noradId || 'Unknown'}</div>
+                <div>Launch: ${d.launchDesignator || 'Unavailable'}</div>
+              </div>
+            </div>
             <div style="font-size: 14px; font-weight: bold; color: #3b82f6; margin-bottom: 5px;">
               ${d.name}
             </div>
@@ -147,6 +158,8 @@ const SatelliteGlobe = ({ satellites, selectedSatellite, onSatelliteSelect }) =>
               <div><strong>Latitude:</strong> ${d.lat.toFixed(4)}°</div>
               <div><strong>Longitude:</strong> ${d.lon.toFixed(4)}°</div>
               <div><strong>Altitude:</strong> ${d.alt.toFixed(2)} km</div>
+              <div><strong>Launched By:</strong> ${d.launchedBy || 'Unknown'}</div>
+              <div><strong>Launch Year:</strong> ${d.launchYear || 'Unavailable'}</div>
             </div>
           </div>
         `}

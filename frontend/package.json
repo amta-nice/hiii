@@ -17,6 +17,7 @@
     "react-dom": "^18.2.0",
     "react-globe.gl": "^2.36.0",
     "react-leaflet": "^4.2.1",
+    "satellite.js": "^5.0.0",
     "sat-lm": "file:..",
     "three": "^0.180.0"
   },
