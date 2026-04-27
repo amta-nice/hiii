@@ -366,3 +366,13 @@ MIT License - see LICENSE file for details.
 ---
 
 **Happy satellite tracking! 🛰️✨**
+
+## 📝 Recent Changes (2026-04-27)
+
+Short summary of frontend-focused updates made without changing backend APIs:
+
+- Frontend TLE propagation: the frontend now fetches TLEs from Celestrak and computes live satellite positions in the browser using `satellite.js`. Positions are re-propagated to the current time and updated frequently so the globe shows live movement.
+- 2-hour client-side caching: TLEs are cached in `localStorage` for 2 hours to limit requests to Celestrak. The app refreshes the cache on that cadence and falls back to cached data when offline.
+- Metadata enrichment: satellites are enriched in the frontend with heuristic metadata (NORAD, launch designator/year, estimated launcher, thumbnail URL) so hover cards and popups show richer info.
+- Robust hover images: globe tooltips and map popups use an inline SVG placeholder plus an overlaying remote thumbnail when available. If the remote thumbnail fails to load it is hidden so the SVG remains visible (no alt-text leak).
+- Frontend-only changes: backend endpoints were not modified. If you prefer authoritative metadata, I can add an optional metadata sync that caches authoritative launch/operator data.

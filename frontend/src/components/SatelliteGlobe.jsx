@@ -138,31 +138,50 @@ const SatelliteGlobe = ({ satellites, selectedSatellite, onSatelliteSelect }) =>
         pointAltitude="altitude"
         pointColor="color"
         pointRadius="size"
-        pointLabel={(d) => `
-          <div style="background: rgba(0,0,0,0.9); padding: 10px; border-radius: 8px; color: white;">
-            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-              <img
-                src="${d.imageUrl || ''}"
-                alt="${d.name}"
-                style="width:36px; height:36px; object-fit:cover; border-radius:6px; border:1px solid rgba(255,255,255,0.25);"
-              />
-              <div style="font-size:11px; color:#9ca3af; line-height:1.3;">
-                <div>NORAD: ${d.noradId || 'Unknown'}</div>
-                <div>Launch: ${d.launchDesignator || 'Unavailable'}</div>
+        pointLabel={(d) => {
+          try {
+            const fallbackSvg = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='8' fill='%23f97316' stroke='%23ffffff' stroke-width='2'/><circle cx='12' cy='12' r='3' fill='%23ffffff'/></svg>";
+            const hasRemote = d.imageUrl && d.imageUrl.length > 4;
+            const imgSrc = hasRemote ? d.imageUrl : fallbackSvg;
+            const name = d.name || 'Unknown';
+            const norad = d.noradId || 'Unknown';
+            const launch = d.launchDesignator || 'Unavailable';
+            const launcher = d.launchedBy || 'Unknown';
+            const launchYear = d.launchYear || 'Unavailable';
+            const lat = (d.lat !== undefined && d.lat !== null) ? Number(d.lat).toFixed(4) : 'N/A';
+            const lon = (d.lon !== undefined && d.lon !== null) ? Number(d.lon).toFixed(4) : 'N/A';
+            const alt = (d.alt !== undefined && d.alt !== null) ? Number(d.alt).toFixed(2) : 'N/A';
+
+            return `
+              <div style="background: rgba(0,0,0,0.9); padding: 10px; border-radius: 8px; color: white;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                  <div style="position:relative; width:36px; height:36px;">
+                    <!-- inline SVG fallback always present -->
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:36px;height:36px;border-radius:6px;display:block;">
+                      <circle cx="12" cy="12" r="8" fill="#f97316" stroke="#ffffff" stroke-width="2" />
+                      <circle cx="12" cy="12" r="3" fill="#ffffff" />
+                    </svg>
+                    ${hasRemote ? `<img src="${imgSrc}" alt="${name}" crossorigin="anonymous" onerror="this.style.display='none'" style="position:absolute;left:0;top:0;width:36px;height:36px;object-fit:cover;border-radius:6px;border:1px solid rgba(255,255,255,0.25);"/>` : ''}
+                  </div>
+                  <div style="font-size:11px; color:#9ca3af; line-height:1.3;">
+                    <div>NORAD: ${norad}</div>
+                    <div>Launch: ${launch}</div>
+                  </div>
+                </div>
+                  <div style="font-size: 14px; font-weight: bold; color: #3b82f6; margin-bottom: 5px;">${name}</div>
+                  <div style="font-size: 12px; line-height: 1.5;">
+                    <div><strong>Latitude:</strong> ${lat}°</div>
+                    <div><strong>Longitude:</strong> ${lon}°</div>
+                    <div><strong>Altitude:</strong> ${alt} km</div>
+                    <div><strong>Launched By:</strong> ${launcher}</div>
+                    <div><strong>Launch Year:</strong> ${launchYear}</div>
+                  </div>
               </div>
-            </div>
-            <div style="font-size: 14px; font-weight: bold; color: #3b82f6; margin-bottom: 5px;">
-              ${d.name}
-            </div>
-            <div style="font-size: 12px; line-height: 1.5;">
-              <div><strong>Latitude:</strong> ${d.lat.toFixed(4)}°</div>
-              <div><strong>Longitude:</strong> ${d.lon.toFixed(4)}°</div>
-              <div><strong>Altitude:</strong> ${d.alt.toFixed(2)} km</div>
-              <div><strong>Launched By:</strong> ${d.launchedBy || 'Unknown'}</div>
-              <div><strong>Launch Year:</strong> ${d.launchYear || 'Unavailable'}</div>
-            </div>
-          </div>
-        `}
+            `;
+          } catch (e) {
+            return `<div style="color:white;padding:8px">${d && d.name ? d.name : 'Satellite'}</div>`;
+          }
+        }}
         onPointClick={(point) => onSatelliteSelect(point)}
         
         // Arcs (orbital paths)
